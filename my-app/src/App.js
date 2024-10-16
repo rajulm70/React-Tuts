@@ -2,7 +2,7 @@ import './App.css';
 import About from './components/About';
 import Navbar from './components/Navbar';
 import TextForm from './components/TextForm';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -10,18 +10,22 @@ import {
 } from "react-router-dom";
 
 function App() {
-  const [mode, setMode] = useState('light');
+  // Set default mode to 'dark'
+  const [mode, setMode] = useState('dark'); // Change 'light' to 'dark'
+
+  useEffect(() => {
+    document.body.style.backgroundColor = '#606060'; // Set initial background for dark mode
+  }, []); // Run once when the component mounts
 
   const toggleMode = () => {
     if (mode === 'light') {
       setMode('dark');
       document.body.style.backgroundColor = '#606060';
-    }
-    else {
+    } else {
       setMode('light');
       document.body.style.backgroundColor = 'white';
     }
-  }
+  };
 
   return (
     <>
@@ -29,8 +33,8 @@ function App() {
         <Navbar title="TextMaster" aboutText="About" mode={mode} toggleMode={toggleMode} />
         <div className="container">
           <Routes>
-            <Route path="/about" element={<About mode={mode} />} /> {/* Use element prop */}
-            <Route path="/" element={<TextForm heading="Enter the text to analyze below" mode={mode} />} /> {/* Use element prop */}
+            <Route path="/about" element={<About mode={mode} />} />
+            <Route path="/" element={<TextForm heading="Enter the text to analyze below" mode={mode} />} />
           </Routes>
         </div>
       </Router>
